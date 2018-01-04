@@ -1,0 +1,32 @@
+{
+    "name": "yiithings/yii2-dotenv",
+    "description": "PHP DotEnv for Yii2 framework",
+    "type": "yii2-extension",
+    "keywords": ["yii2","extension","dotenv"],
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Panlatent",
+            "email": "panlatent@gmail.com"
+        }
+    ],
+    "require": {
+        "php": ">=5.5.0",
+        "yiisoft/yii2": "*",
+        "vlucas/phpdotenv": "^2.4"
+    },
+    "autoload": {
+        "psr-4": {
+            "yiithings\\dotenv\\": "src/"
+        },
+        "files": ["src/autoload.php"]
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^5.7"
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "tests\\": "tests/"
+        }
+    }
+}
