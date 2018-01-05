@@ -32,3 +32,10 @@ Usage
 -----
 
 Once the extension is installed, simply use it in your code by  :
+```
+[
+    'db' => [
+        'password' => env('DB_PASS'),
+    ],
+]
+```
