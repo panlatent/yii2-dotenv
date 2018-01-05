@@ -11,6 +11,15 @@ use yiithings\dotenv\Loader;
  * If the environment variable COMPOSER_DOTENV_DISABLE have been set to stop loading.
  */
 if (getenv('COMPOSER_DOTENV_DISABLE')) {
+    if ( ! function_exists('env')) {
+        function env($name, $default = false)
+        {
+            $value = getenv($name);
+
+            return $value ? $value : $default;
+        }
+    }
+
     return;
 }
 
@@ -22,7 +31,7 @@ if ( ! function_exists('env')) {
      * Get a value from environment variable.
      *
      * @param string $name
-     * @param bool $default
+     * @param bool   $default
      * @return array|bool|false|string
      */
     function env($name, $default = false)

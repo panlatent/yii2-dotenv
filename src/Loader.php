@@ -7,7 +7,7 @@ use yii\base\Component;
 
 class Loader extends Component
 {
-    public static function load($path, $file, $overload)
+    public static function load($path, $file = '.env', $overload = false)
     {
         /*
          * Find Composer base directory.
