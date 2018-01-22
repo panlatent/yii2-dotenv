@@ -10,7 +10,7 @@ use yiithings\dotenv\Loader;
 /*
  * If the environment variable COMPOSER_DOTENV_DISABLE have been set to stop loading.
  */
-if (getenv('COMPOSER_DOTENV_DISABLE')) {
+if (getenv('COMPOSER_DOTENV_DISABLE') || (defined('YII_ENV') && YII_ENV == 'prod')) {
     if ( ! function_exists('env')) {
         function env($name, $default = false)
         {
