@@ -23,10 +23,13 @@ class Loader extends Component
          */
         if (empty($path)) {
             if (class_exists('Yii')) {
+                /*
+                 * Usually, the env is used before defining these aliases:
+                 * @vendor and @app. So, if you vendor is symbolic link,
+                 * Please register @vendor alias in bootstrap file or before
+                 * call env function.
+                 */
                 if (Yii::getAlias('@vendor', false)) {
-                    /*
-                     * Usually, the env is used before defining these aliases.
-                     */
                     $vendorDir = Yii::getAlias('@vendor');
                     $path = dirname($vendorDir);
                 } elseif (Yii::getAlias('@app', false)) {
