@@ -3,18 +3,48 @@
 namespace yiithings\dotenv;
 
 use Dotenv\Dotenv;
+use Yii;
 use yii\base\Component;
 
 class Loader extends Component
 {
-    public static function load($path, $file = '.env', $overload = false)
+    /**
+     * Load .env file from Yii2 project root directory.
+     *
+     * @param string $path
+     * @param string $file
+     * @param bool   $overload
+     * @return bool
+     */
+    public static function load($path = '', $file = '.env', $overload = false)
     {
         /*
          * Find Composer base directory.
          */
         if (empty($path)) {
-            $vendorDir = dirname(dirname(dirname(dirname(__FILE__))));
-            $path = dirname($vendorDir);
+            if (class_exists('Yii')) {
+                if (Yii::getAlias('@vendor', false)) {
+                    /*
+                     * Usually, the env is used before defining these aliases.
+                     */
+                    $vendorDir = Yii::getAlias('@vendor');
+                    $path = dirname($vendorDir);
+                } elseif (Yii::getAlias('@app', false)) {
+                    $path = Yii::getAlias('@app');
+                } else {
+                    $yiiDir = Yii::getAlias('@yii');
+                    $path = dirname(dirname(dirname($yiiDir)));
+                }
+            } else {
+                /*
+                 * If not found Yii class, will use composer vendor directory
+                 * structure finding.
+                 *
+                 * Notice: this method are not handled process symbolic link!
+                 */
+                $vendorDir = dirname(dirname(dirname(dirname(__FILE__))));
+                $path = dirname($vendorDir);
+            }
         }
         /*
          * Get env file name from environment variable,
@@ -27,7 +57,7 @@ class Loader extends Component
          * This program will not force the file to be loaded,
          * if the file does not exist then return.
          */
-        if ( ! file_exists(rtrim($path, DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR . $file)) {
+        if (! file_exists(rtrim($path, DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR . $file)) {
             return false;
         }
         $dotEnv = new DotEnv($path, $file);
