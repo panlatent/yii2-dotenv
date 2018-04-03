@@ -4,25 +4,7 @@
  *
  * Autoload .env at Composer autoloader.
  */
-
 use yiithings\dotenv\Loader;
-
-/*
- * If the environment variable COMPOSER_DOTENV_DISABLE is set or the YII_ENV
- * constant is defined as prod, any .env file is not loaded.
- */
-if (getenv('COMPOSER_DOTENV_DISABLE') || (defined('YII_ENV') && YII_ENV == 'prod')) {
-    if ( ! function_exists('env')) {
-        function env($name, $default = false)
-        {
-            $value = getenv($name);
-
-            return $value ? $value : $default;
-        }
-    }
-
-    return;
-}
 
 /*
  * Prevent duplicate definition of the same name function.
@@ -37,14 +19,26 @@ if ( ! function_exists('env')) {
      */
     function env($name, $default = false)
     {
-        static $loaded = false;
-        if ( ! $loaded) {
-            Loader::load(
-                getenv('COMPOSER_DOTENV_PATH'),
-                getenv('COMPOSER_DOTENV_FILE'),
-                getenv('COMPOSER_DOTENV_OVERLOAD')
-            );
-            $loaded = true;
+        static $loaded = null;
+        if ($loaded === null) {
+            /**
+             * If the constant DISABLE_DOTENV_LOAD is defined as true, any .env
+             * files is not loaded.
+             *
+             * if (YII_ENV == 'prod') {
+             *     define('DISABLE_DOTENV_LOAD', true)
+             * }
+             */
+            if (defined('DISABLE_DOTENV_LOAD') && DISABLE_DOTENV_LOAD) {
+                $loaded = false;
+            } else {
+                Loader::load(
+                    defined('DOTENV_PATH') ? DOTENV_PATH : '',
+                    defined('DOTENV_FILE') ? DOTENV_FILE : '',
+                    defined('DOTENV_OVERLOAD') ? DOTENV_OVERLOAD : false
+                );
+                $loaded = true;
+            }
         }
         $value = getenv($name);
 

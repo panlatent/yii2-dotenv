@@ -22,7 +22,7 @@ class Loader extends Component
          * Find Composer base directory.
          */
         if (empty($path)) {
-            if (class_exists('Yii')) {
+            if (class_exists('Yii', false)) {
                 /*
                  * Usually, the env is used before defining these aliases:
                  * @vendor and @app. So, if you vendor is symbolic link,
@@ -39,13 +39,17 @@ class Loader extends Component
                     $path = dirname(dirname(dirname($yiiDir)));
                 }
             } else {
-                /*
-                 * If not found Yii class, will use composer vendor directory
-                 * structure finding.
-                 *
-                 * Notice: this method are not handled process symbolic link!
-                 */
-                $vendorDir = dirname(dirname(dirname(dirname(__FILE__))));
+                if (defined('VENDOR_PATH')) {
+                    $vendorDir = VENDOR_PATH;
+                } else {
+                    /*
+                     * If not found Yii class, will use composer vendor directory
+                     * structure finding.
+                     *
+                     * Notice: this method are not handled process symbolic link!
+                     */
+                    $vendorDir = dirname(dirname(dirname(dirname(__FILE__))));
+                }
                 $path = dirname($vendorDir);
             }
         }
