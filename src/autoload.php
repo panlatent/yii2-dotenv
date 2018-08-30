@@ -9,7 +9,7 @@ use yiithings\dotenv\Loader;
 /*
  * Prevent duplicate definition of the same name function.
  */
-if ( ! function_exists('env')) {
+if ( ! function_exists('lenv')) {
     /**
      * Get a value from environment variable.
      *
@@ -17,7 +17,7 @@ if ( ! function_exists('env')) {
      * @param bool   $default
      * @return array|bool|false|string
      */
-    function env($name, $default = false)
+    function lenv($name, $default = false)
     {
         static $loaded = null;
         if ($loaded === null) {
