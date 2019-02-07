@@ -4,7 +4,7 @@
  *
  * Autoload .env at Composer autoloader.
  */
-use yiithings\dotenv\Loader;
+use xandrkat\dotenv\Loader;
 
 /*
  * Prevent duplicate definition of the same name function.

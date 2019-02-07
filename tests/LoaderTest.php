@@ -1,6 +1,6 @@
 <?php
 
-use yiithings\dotenv\Loader;
+use xandrkat\dotenv\Loader;
 
 class LoaderTest extends PHPUnit_Framework_TestCase
 {

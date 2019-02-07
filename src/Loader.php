@@ -1,6 +1,6 @@
 <?php
 
-namespace yiithings\dotenv;
+namespace xandrkat\dotenv;
 
 use Dotenv\Dotenv;
 use Yii;
