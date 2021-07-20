@@ -67,7 +67,7 @@ class Loader extends Component
         if (! file_exists(rtrim($path, DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR . $file)) {
             return false;
         }
-        $dotEnv = new DotEnv($path, $file);
+        $dotEnv = DotEnv::createUnsafeImmutable($path, $file);
         /*
          * Overload or load method by environment variable COMPOSER_DOTENV_OVERLOAD.
          */
