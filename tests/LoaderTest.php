@@ -4,7 +4,7 @@ use yiithings\dotenv\Loader;
 
 class LoaderTest extends PHPUnit_Framework_TestCase
 {
-    public function testLoad()
+    public function testLoad(): void
     {
         require __DIR__ . '/../vendor/yiisoft/yii2/Yii.php';
         Yii::setAlias('@app', __DIR__);

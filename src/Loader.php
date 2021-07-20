@@ -13,10 +13,10 @@ class Loader extends Component
      *
      * @param string $path
      * @param string $file
-     * @param bool   $overload
+     * @param bool $overload
      * @return bool
      */
-    public static function load($path = '', $file = '.env', $overload = false)
+    public static function load(string $path = '', string $file = '.env', bool $overload = false): bool
     {
         /*
          * Find Composer base directory.
