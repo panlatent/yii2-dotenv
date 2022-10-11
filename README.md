@@ -1,7 +1,7 @@
 Yii2 DotEnv
 ===========
-[![Build Status](https://travis-ci.org/yiithings/yii2-dotenv.svg)](https://travis-ci.org/yiithings/yii2-dotenv)
-[![Latest Stable Version](https://poser.pugx.org/yiithings/yii2-dotenv/v/stable.svg)](https://packagist.org/packages/yiithings/yii2-dotenv) 
+[![Build Status](https://travis-ci.org/panlatent/yii2-dotenv.svg)](https://travis-ci.org/panlatent/yii2-dotenv)
+[![Latest Stable Version](https://poser.pugx.org//yii2-dotenv/v/stable.svg)](https://packagist.org/packages/yiithings/yii2-dotenv) 
 [![Total Downloads](https://poser.pugx.org/yiithings/yii2-dotenv/downloads.svg)](https://packagist.org/packages/yiithings/yii2-dotenv) 
 [![Latest Unstable Version](https://poser.pugx.org/yiithings/yii2-dotenv/v/unstable.svg)](https://packagist.org/packages/yiithings/yii2-dotenv)
 [![License](https://poser.pugx.org/yiithings/yii2-dotenv/license.svg)](https://packagist.org/packages/yiithings/yii2-dotenv)
@@ -10,31 +10,30 @@ PHP DotEnv for Yii2 framework.
 
 Installation
 ------------
+Then tell [Composer](https://getcomposer.org) to load the extension:
 
-The preferred way to install this extension is through [composer](http://getcomposer.org/download/).
-
-Either run
-
-```
-php composer.phar require --prefer-dist yiithings/yii2-dotenv "*"
+```bash
+composer require yiithings/yii2-dotenv
 ```
 
-or add
+Configuration
+------------
+The extension default load environment variables from `.env` file in your application root directory. You can change 
+the file path and name configure in your application entry file:
 
+```php
+define('DOTENV_PATH', '/path/to/.env');
+define('DOTENV_FILE', '.env');
+define('DOTENV_OVERLOAD', false);
 ```
-"yiithings/yii2-dotenv": "*"
-```
-
-to the require section of your `composer.json` file.
-
 
 Usage
 -----
-
 Once the extension is installed, simply use it in your code by  :
 ```
 [
     'db' => [
+        'username' => env('DB_USERNAME', 'root'),
         'password' => env('DB_PASS'),
     ],
 ]

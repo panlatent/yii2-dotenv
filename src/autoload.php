@@ -4,27 +4,27 @@
  *
  * Autoload .env at Composer autoloader.
  */
+
 use yiithings\dotenv\Loader;
 
 /*
  * Prevent duplicate definition of the same name function.
  */
-if ( ! function_exists('env')) {
+if (!function_exists('env')) {
     /**
      * Get a value from environment variable.
      *
-     * @param string $name
-     * @param bool   $default
-     * @return array|bool|false|string
+     * @param string $name The environment variable name.
+     * @param mixed $default The default value. Default is false.
+     * @return mixed
      */
-    function env($name, $default = false)
+    function env(string $name, mixed $default = false): mixed
     {
         static $loaded = null;
         if ($loaded === null) {
             /**
              * If the constant DISABLE_DOTENV_LOAD is defined as true, any .env
              * files is not loaded.
-             *
              * if (YII_ENV == 'prod') {
              *     define('DISABLE_DOTENV_LOAD', true)
              * }
@@ -40,8 +40,9 @@ if ( ! function_exists('env')) {
                 $loaded = true;
             }
         }
+
         $value = getenv($name);
 
-        return $value ? $value : $default;
+        return $value ?: $default;
     }
 }

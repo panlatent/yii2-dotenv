@@ -11,9 +11,9 @@ class Loader extends Component
     /**
      * Load .env file from Yii2 project root directory.
      *
-     * @param string $path
-     * @param string $file
-     * @param bool $overload
+     * @param string $path The path to the directory containing the .env file.
+     * @param string $file The name of the .env file.
+     * @param bool $overload Overload existing environment variables.
      * @return bool
      */
     public static function load(string $path = '', string $file = '.env', bool $overload = false): bool
@@ -21,7 +21,7 @@ class Loader extends Component
         /*
          * Find Composer base directory.
          */
-        if (empty($path)) {
+        if ($path === '') {
             if (class_exists('Yii', false)) {
                 /*
                  * Usually, the env is used before defining these aliases:
@@ -36,7 +36,7 @@ class Loader extends Component
                     $path = Yii::getAlias('@app');
                 } else {
                     $yiiDir = Yii::getAlias('@yii');
-                    $path = dirname(dirname(dirname($yiiDir)));
+                    $path = dirname($yiiDir, 3);
                 }
             } else {
                 if (defined('VENDOR_PATH')) {
@@ -48,7 +48,7 @@ class Loader extends Component
                      *
                      * Notice: this method are not handled process symbolic link!
                      */
-                    $vendorDir = dirname(dirname(dirname(dirname(__FILE__))));
+                    $vendorDir = dirname(__FILE__, 4);
                 }
                 $path = dirname($vendorDir);
             }
@@ -57,25 +57,23 @@ class Loader extends Component
          * Get env file name from environment variable,
          * if COMPOSER_DOTENV_FILE have been set.
          */
-        if (empty($file)) {
+        if ($file === '') {
             $file = '.env';
         }
+
         /*
          * This program will not force the file to be loaded,
          * if the file does not exist then return.
          */
-        if (! file_exists(rtrim($path, DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR . $file)) {
+        if (!file_exists(rtrim($path, DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR . $file)) {
             return false;
         }
-        $dotEnv = DotEnv::createUnsafeImmutable($path, $file);
+
         /*
          * Overload or load method by environment variable COMPOSER_DOTENV_OVERLOAD.
          */
-        if ($overload) {
-            $dotEnv->overload();
-        } else {
-            $dotEnv->load();
-        }
+        $dotEnv = $overload ? DotEnv::createUnsafeImmutable($path, $file) : Dotenv::createUnsafeMutable($path, $file);
+        $dotEnv->load();
 
         return true;
     }
