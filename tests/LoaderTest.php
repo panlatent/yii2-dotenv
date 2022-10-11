@@ -1,8 +1,12 @@
 <?php
 
+namespace tests;
+
+use PHPUnit\Framework\TestCase;
+use Yii;
 use yiithings\dotenv\Loader;
 
-class LoaderTest extends PHPUnit_Framework_TestCase
+class LoaderTest extends TestCase
 {
     public function testLoad(): void
     {
